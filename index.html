@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Llamaysuna</title>
+
+<link href="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.css" rel="stylesheet">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/style.css">
+      <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <!-- menu -->
+    <div id="menu" class="menu">
+        <button id="menu-toggle" class="menu-toggle">☰</button>
+        <br>
+        <nav class="menu-nav">
+            <ul>
+              <br>
+                <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li> 
+                <li id="nav-sesion" style="display: none;">
+  <a href="html/usuario.html"><i class="fas fa-apple-alt"></i> Usuario</a>
+</li>
+
+                <li id="nav-historial" style="display: none;">
+  <a href="html/consultas.html"><i class="fas fa-apple-alt"></i> Historial</a>
+</li>
+                <li class="nav-item"> <a class="nav-link" aria-current="page" id="nav-cerrar"><i class="bi bi-box-arrow-right"></i> Salir</a>
+              </li>
+            </ul>
+        </nav>
+    </div>
+
+  <header>
+    <h1>Grafo de cultivos</h1>
+  </header>
+
+  <!-- Visualización del grafo -->
+  <main>
+    <!-- Controles para calcular ruta -->
+    <section id="control">
+      <h2>Calcular el camino más corto</h2>
+
+      <label for="origen">Origen:</label>
+      <input type="text" id="origen" placeholder="Ej: 1" />
+
+      <label for="destino">Destino:</label>
+      <input type="text" id="destino" placeholder="Ej: 5" />
+
+      <label for="algoritmo">Algoritmo:</label>
+      <select id="algoritmo">
+        <option value="dijkstra">Dijkstra</option>
+        <option value="a">A*</option>
+      </select>
+
+      <button id="btn-calcular">Calcular</button>
+
+      <div style="display:none" ><button id="consultas_Cambio">Guardar</button></div>
+
+    </section>
+    <br>
+
+    <!-- Resultado del camino mínimo -->
+    <div id="resultado"></div>
+    <br>
+    <!-- grafo sombreado del camino mínimo -->
+    <div id="grafo-container"></div>
+
+  </main>
+
+  <footer>
+    <p>© 2025 Llamaysuna. Todos los derechos reservados.</p>
+  </footer>
+
+<script src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script> 
+
+
+<script type="module" src="js/menu.js"></script>
+<script type="module" src="js/script.js"></script>
+<script type="module" src="js/algoritmos.js"></script>
+
+</body>
+</html>

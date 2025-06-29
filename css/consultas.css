@@ -1,0 +1,138 @@
+/* Fuente base */
+body {
+  font-family: 'Questrial', sans-serif;
+  background-color: #f1e7dd;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header */
+header {
+  background-color: #283d60;
+  color: white;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+/* Contenedor principal */
+#totalConsultas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 2rem;
+}
+
+/* Tarjeta de consulta */
+.consulta-card {
+  background-color: white;
+  border: 2px solid #d8ae5e;
+  border-left: 8px solid #283d60;
+  border-radius: 10px;
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(40, 61, 96, 0.2);
+  margin-bottom: 1.5rem;
+}
+
+.consulta-card p {
+  margin: 0.3rem 0;
+  color: #283d60;
+  font-size: 1rem;
+}
+
+/* Mensaje sin consultas */
+#totalConsultas.sin-datos::before {
+  content: "No se guardó ninguna consulta.";
+  background-color: #ffffff;
+  border: 2px dashed #d8ae5e;
+  color: #283d60;
+  font-weight: bold;
+  text-align: center;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  margin: 2rem auto;
+  display: block;
+}
+
+#resultado {
+  background-color: #ffffff;
+  border: 2px solid #d8ae5e;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 10px rgba(40, 61, 96, 0.2);
+  color: #283d60;
+}
+
+#resultado p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+
+
+/* Footer */
+footer {
+  text-align: center;
+  background-color: #283d60;
+  color: white;
+  padding: 1rem 0;
+  margin-top: 3rem;
+}
+
+
+
+/*MENU*/
+.menu {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #283d60;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.menu-nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.menu-toggle {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background-color: #283d60;
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1100;
+  border-radius: 8px;
+}
+
+.menu-nav ul li {
+  margin: 0;
+  padding: 15px 20px;
+}
+
+.menu-nav ul li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+}
+
+.menu.open {
+  left: 0;
+}
+
