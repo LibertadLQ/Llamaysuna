@@ -28,7 +28,7 @@ onAuthStateChanged(auth, (user) => {
 // Cerrar sesión
 document.getElementById("nav-cerrar").addEventListener("click", () => {
     signOut(auth).then(() => {
-        window.location.href = "../index.html";
+        window.location.href = "/Llamaysuna/index.html";
     }).catch((error) => {
         console.error("Error al cerrar sesión:", error);
     });
