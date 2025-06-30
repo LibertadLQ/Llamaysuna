@@ -46,7 +46,7 @@ function dijkstra(graph, start, end) {
   return { path, cost };
 }
 
-// Algoritmo A* (sin heurística real)
+// Algoritmo A* 
 function astar(graph, start, end) {
   const openSet = new Set([start]);
   const cameFrom = {};
@@ -98,7 +98,7 @@ function astar(graph, start, end) {
   return null;
 }
 
-// Escuchar el mensaje del hilo principal
+//mensaje del hilo principal
 onmessage = function (e) {
   const { algoritmo, grafo, origen, destino } = e.data;
 

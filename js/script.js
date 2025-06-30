@@ -4,7 +4,7 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/f
 
 let visEdges, network, grafo = {};
 
-// Mostrar/ocultar botón de guardar según estado de autenticación
+//mostrar/ocultar el boton de guardar segun estado de autenticación
 onAuthStateChanged(auth, (user) => {
   const btnGuardar = document.getElementById("consultas_Cambio");
   if (btnGuardar && btnGuardar.parentElement) {
@@ -12,7 +12,7 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// Guardar consulta en Firebase
+//guardar consulta en Firebase
 document.getElementById("consultas_Cambio").addEventListener("click", async () => {
   const origen = document.getElementById("origen").value;
   const destino = document.getElementById("destino").value;
@@ -104,7 +104,6 @@ window.addEventListener("DOMContentLoaded", () => {
       network = new vis.Network(container, { nodes, edges: visEdges }, options);
       network.fit();
 
-      // Preparar estructura de grafo
       data.edges.forEach(e => {
         if (!grafo[e.source]) grafo[e.source] = [];
         grafo[e.source].push({ node: e.target, weight: e.weight });
@@ -137,12 +136,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
       const { path, cost: costoTotal } = resultado;
 
-      // Resetear estilos
+      //resetear estilos
       visEdges.forEach(edge => {
         visEdges.update({ id: edge.id, color: "#aaa", width: 1 });
       });
 
-      // Pintar camino encontrado
+      //pintar camino encontrado
       for (let i = 0; i < path.length - 1; i++) {
         const from = path[i];
         const to = path[i + 1];

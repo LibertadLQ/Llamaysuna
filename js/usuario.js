@@ -1,22 +1,22 @@
 import { registerUser, loginUser } from "./config.js";
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Botones y formularios
+    //botones y formularios
     const loginBtn = document.getElementById('loginBtn');
     const registerBtn = document.getElementById('registerBtn');
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
 
-    // Inputs de contraseñas
+    //inputs de contraseñas
     const toggleLoginPassword = document.getElementById('toggleLoginPassword');
     const loginPassword = document.getElementById('loginPassword');
     const toggleRegisterPassword = document.getElementById('toggleRegisterPassword');
     const registerPassword = document.getElementById('registerPassword');
 
-    // Mostrar login por defecto
+    //mostrar login por defecto
     loginForm.style.display = "flex";
 
-    // Cambio entre formularios
+    //cambio entre formularios
     loginBtn.addEventListener('click', () => {
         loginForm.style.display = "flex";
         registerForm.style.display = "none";
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
         loginBtn.classList.remove('btn-inactive');
     });
 
-    // Mostrar/Ocultar contraseña - Login
+    //mostrar/Ocultar contraseña - Login
     toggleLoginPassword.addEventListener('click', () => {
         const type = loginPassword.type === 'password' ? 'text' : 'password';
         loginPassword.type = type;
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleLoginPassword.classList.toggle('bi-eye-slash-fill');
     });
 
-    // Mostrar/Ocultar contraseña - Registro
+    //mostrar/Ocultar contraseña - Registro
     toggleRegisterPassword.addEventListener('click', () => {
         const type = registerPassword.type === 'password' ? 'text' : 'password';
         registerPassword.type = type;
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleRegisterPassword.classList.toggle('bi-eye-slash-fill');
     });
 
-    // Envío formulario de registro
+    //enviar formulario de registro
     registerForm.addEventListener('submit', (event) => {
         event.preventDefault();
         const email = document.getElementById('registerEmail').value;
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Envío formulario de inicio de sesión
+    //enviar formulario de inicio de sesion
     loginForm.addEventListener('submit', (event) => {
         event.preventDefault();
         const email = document.getElementById('loginEmail').value;
@@ -79,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
             loginUser(email, password)
                 .then(() => {
                     loginForm.reset();
-                    // Aquí decides si rediriges o haces algo más
                     console.log("Inicio de sesión exitoso");
                 })
                 .catch((error) => {
@@ -90,6 +89,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Activar la animación fade-in
     document.body.classList.add('fade-in-active');
 });

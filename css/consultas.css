@@ -1,4 +1,4 @@
-/* Fuente base */
+
 body {
   font-family: 'Questrial', sans-serif;
   background-color: #f1e7dd;
@@ -6,7 +6,6 @@ body {
   padding: 0;
 }
 
-/* Header */
 header {
   background-color: #283d60;
   color: white;
@@ -14,7 +13,7 @@ header {
   text-align: center;
 }
 
-/* Contenedor principal */
+
 #totalConsultas {
   display: flex;
   flex-direction: column;
@@ -24,7 +23,7 @@ header {
   padding: 2rem;
 }
 
-/* Tarjeta de consulta */
+/* consulta cards*/
 .consulta-card {
   background-color: white;
   border: 2px solid #d8ae5e;
@@ -43,7 +42,7 @@ header {
   font-size: 1rem;
 }
 
-/* Mensaje sin consultas */
+/* mensaje sin consultas */
 #totalConsultas.sin-datos::before {
   content: "No se guardó ninguna consulta.";
   background-color: #ffffff;
@@ -75,9 +74,6 @@ header {
   font-size: 1.1rem;
 }
 
-
-
-/* Footer */
 footer {
   text-align: center;
   background-color: #283d60;
@@ -88,7 +84,7 @@ footer {
 
 
 
-/*MENU*/
+/*menu*/
 .menu {
     position: fixed;
     top: 0;

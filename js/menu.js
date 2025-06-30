@@ -9,7 +9,6 @@ onAuthStateChanged(auth, (user) => {
         document.getElementById("nav-cerrar").style.display = "block";
         document.getElementById("nav-sesion").style.display = "none";
         
-        // Solo si existe el botón
         if (consultasCambio) {
             consultasCambio.parentElement.style.display = "block";
         }
@@ -18,7 +17,6 @@ onAuthStateChanged(auth, (user) => {
         document.getElementById("nav-cerrar").style.display = "none";
         document.getElementById("nav-sesion").style.display = "block";
 
-        // Solo si existe el botón
         if (consultasCambio) {
             consultasCambio.parentElement.style.display = "none";
         }
@@ -34,7 +32,7 @@ document.getElementById("nav-cerrar").addEventListener("click", () => {
     });
 });
 
-// Toggle menú
+//Toggle menu
 const btnToggle = document.getElementById("menu-toggle");
 if (btnToggle) {
     btnToggle.addEventListener("click", () => {
