@@ -1,3 +1,4 @@
+/* --- ESTILO GLOBAL --- */
 body {
   margin: 0;
   font-family: 'Questrial', sans-serif;
@@ -6,6 +7,7 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
+
 header {
   text-align: center;
   padding: 20px 0;
@@ -20,6 +22,25 @@ main {
   padding: 1rem;
 }
 
+footer {
+  text-align: center;
+  background-color: #283d60;
+  color: white;
+  padding: 1rem;
+  margin-top: auto;
+}
+
+/* --- CONTENEDOR DEL GRAFO --- */
+#grafo-container {
+  width: 100%;
+  max-width: 900px;
+  height: 500px;
+  border: 2px solid #d8ae5e;
+  border-radius: 12px;
+  margin: 1rem 0;
+}
+
+/* --- CONTROL DEL FORMULARIO --- */
 #control form {
   display: flex;
   flex-wrap: wrap;
@@ -37,10 +58,13 @@ main {
 #control select {
   width: 120px;
   padding: 0.3rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
-
-#btn-calcular, #consultas_Cambio {
+/* --- BOTONES --- */
+#btn-calcular,
+#consultas_Cambio {
   background-color: #d8ae5e;
   color: white;
   border: none;
@@ -48,61 +72,112 @@ main {
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
-  margin-top: 0.5rem;
+  /* Quitar márgenes aquí */
+  margin: 0;
 }
 
-#btn-calcular:hover, #consultas_Cambio:hover {
+#btn-calcular, #consultas_Cambio {
+  margin-top: 0.8rem;
+  margin-left: 1.5rem; /* Separación horizontal */
+}
+
+#consultas_Cambio {
+  margin-top: 0.8rem;
+}
+
+#btn-calcular:hover,
+#consultas_Cambio:hover {
   background-color: #c1984f;
 }
 
-footer {
-  text-align: center;
-  background-color: #283d60;
-  color: white;
-  padding: 1rem;
-  margin-top: auto;
-}
-#grafo-container {
+/* --- RESULTADOS EN TARJETAS --- */
+#resultado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
   width: 100%;
   max-width: 900px;
-  height: 500px;
+}
+
+.resultado-card {
+  background-color: #f9f5ef; /* color cálido y suave */
   border: 2px solid #d8ae5e;
+  border-left: 6px solid #283d60;
   border-radius: 12px;
-  margin: 1rem 0;
+  padding: 1rem 1.5rem;
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(40, 61, 96, 0.1);
+  transition: transform 0.2s ease;
 }
 
+.resultado-card:hover {
+  transform: scale(1.02);
+}
 
-/*MENU*/
-.menu {
-    position: fixed;
-    top: 0;
-    left: -250px;
-    width: 250px;
-    height: 100%;
-    background-color: #283d60;
-    transition: left 0.3s ease;
-    z-index: 1000;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
+.resultado-card p {
+  margin: 0.3rem 0;
+  color: #333;
 }
-.menu-nav ul {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+
+.resultado-card strong {
+  color: #283d60;
 }
-.menu-toggle {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  background-color: #283d60;
+.formulario-ruta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.formulario-ruta label {
+  font-weight: bold;
+}
+
+.formulario-ruta input,
+.formulario-ruta select {
+  width: 120px;
+  padding: 0.3rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.formulario-ruta button {
+  background-color: #d8ae5e;
   color: white;
   border: none;
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 1100;
+  padding: 0.7rem 1.2rem;
   border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.formulario-ruta button:hover {
+  background-color: #c1984f;
+}
+
+
+
+/* --- MENU LATERAL --- */
+.menu {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: #283d60;
+  transition: left 0.3s ease;
+  z-index: 1000;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.menu-nav ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .menu-nav ul li {
@@ -116,7 +191,19 @@ footer {
   display: block;
 }
 
+.menu-toggle {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background-color: #283d60;
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1100;
+  border-radius: 8px;
+}
+
 .menu.open {
   left: 0;
 }
-
