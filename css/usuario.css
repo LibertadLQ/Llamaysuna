@@ -178,3 +178,33 @@ body::before {
                 padding: 10px;
             }
         }
+.back-button-container {
+    display: flex;
+    justify-content: start;
+    padding-left: 20px;
+    margin-top: 15px;
+}
+
+.back-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    background-color: #d8ae5e;
+    color: #283d60;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.back-button:hover {
+    background-color: #f1e7dd;
+    color: #283d60;
+    transform: translateY(-2px);
+}
+
+
+
