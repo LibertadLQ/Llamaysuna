@@ -7,10 +7,11 @@ let visEdges, network, grafo = {};
 //mostrar/ocultar el boton de guardar segun estado de autenticación
 onAuthStateChanged(auth, (user) => {
   const btnGuardar = document.getElementById("consultas_Cambio");
-  if (btnGuardar && btnGuardar.parentElement) {
-    btnGuardar.parentElement.style.display = user ? "block" : "none";
+  if (btnGuardar) {
+    btnGuardar.style.display = user ? "inline-block" : "none";
   }
 });
+
 
 //guardar consulta en Firebase
 document.getElementById("consultas_Cambio").addEventListener("click", async () => {

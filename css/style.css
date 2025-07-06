@@ -72,17 +72,8 @@ footer {
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
-  margin: 0;
 }
 
-#btn-calcular, #consultas_Cambio {
-  margin-top: 0.8rem;
-  margin-left: 1.5rem; 
-}
-
-#consultas_Cambio {
-  margin-top: 0.8rem;
-}
 
 #btn-calcular:hover,
 #consultas_Cambio:hover {
@@ -107,6 +98,10 @@ footer {
   padding: 1rem 1.5rem;
   width: 100%;
   box-shadow: 0 4px 10px rgba(40, 61, 96, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
 }
 
 .resultado-card:hover {
@@ -152,6 +147,12 @@ footer {
 
 .formulario-ruta button:hover {
   background-color: #c1984f;
+}
+
+.botones {
+  display: flex;
+  gap: 10px;
+  margin-top: 0.8rem;
 }
 
 
