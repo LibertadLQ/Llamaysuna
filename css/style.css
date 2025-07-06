@@ -161,7 +161,7 @@ footer {
   left: -250px;
   width: 250px;
   height: 100%;
-  background-color: #283d60;
+  background-color: #07193a;
   transition: left 0.3s ease;
   z-index: 1000;
   border-top-right-radius: 20px;
@@ -191,7 +191,7 @@ footer {
   position: fixed;
   top: 10px;
   left: 10px;
-  background-color: #283d60;
+  background-color: #07193a;
   color: white;
   border: none;
   font-size: 24px;

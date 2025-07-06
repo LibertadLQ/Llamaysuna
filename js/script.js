@@ -158,7 +158,7 @@ window.addEventListener("DOMContentLoaded", () => {
       }
 
       document.getElementById("resultado").innerHTML = `
-        <p><strong>🔗 Cultivos a recoger:</strong> ${path.join(" ➜ ")}</p><br>
+        <p><strong>🔗 Cultivos a recoger:</strong> ${path.join(" ➜ ")}</p>
         <p><strong> Longitud total:</strong> ${costoTotal}</p>
       `;
     };
