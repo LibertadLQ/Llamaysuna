@@ -49,8 +49,10 @@ document.getElementById("consultas_Cambio").addEventListener("click", async () =
 window.addEventListener("DOMContentLoaded", () => {
   const contenedor = document.getElementById("grafo-container");
 
+  //cargar el archivo JSON que contiene la información del grafo
   fetch("json/compacto_graph.json")
     .then(res => res.json())
+    //crear los nodos para el grafo visual
     .then(data => {
       const nodos = new vis.DataSet(
         data.nodes.map(n => ({
@@ -63,11 +65,12 @@ window.addEventListener("DOMContentLoaded", () => {
         }))
       );
 
-      // Llenar el objeto posiciones
+      //guardar las posiciones de cada nodo en un objeto
       data.nodes.forEach(n => {
         posiciones[n.id] = { x: n.attributes.x * 5, y: -n.attributes.y * 5 };
       });
 
+      //crear aristas para el grafo visual
       conjuntoAristasVis = new vis.DataSet(
         data.edges.map((e, i) => ({
           id: `${e.source}-${e.target}-${i}`,
@@ -86,13 +89,16 @@ window.addEventListener("DOMContentLoaded", () => {
         edges: { smooth: false }
       };
 
+      //crear y mostrar el grafo en el contenedor html
       red = new vis.Network(contenedor, { nodes: nodos, edges: conjuntoAristasVis }, opciones);
       red.fit();
 
       data.edges.forEach(e => {
+        //agregar la conexión desde el nodo origen al destino
         if (!grafo[e.source]) grafo[e.source] = [];
         grafo[e.source].push({ nodo: e.target, peso: e.weight });
 
+        //grafo no dirigido
         if (!grafo[e.target]) grafo[e.target] = [];
         grafo[e.target].push({ nodo: e.source, peso: e.weight });
       });
