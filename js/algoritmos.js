@@ -1,179 +1,183 @@
 // Algoritmo de Dijkstra
-function dijkstra(graph, start, end) {
-  const visited = new Set();
-  const distances = {};
-  const previous = {};
-  const queue = new Set(Object.keys(graph));
+function dijkstra(grafo, inicio, fin) {
+  const distancias = {};
+  const anteriores = {};
+  const nodosPendientes = new Set(Object.keys(grafo));
 
-  queue.forEach((n) => distances[n] = Infinity);
-  distances[start] = 0;
+  //inicializar distancias
+  nodosPendientes.forEach(nodo => distancias[nodo] = Infinity);
+  distancias[inicio] = 0;
 
-  while (queue.size) {
-    const current = [...queue].reduce((a, b) =>
-      distances[a] < distances[b] ? a : b
+  while (nodosPendientes.size) {
+    //nodo con la distancia mas corta
+    const actual = [...nodosPendientes].reduce((a, b) =>
+      distancias[a] < distancias[b] ? a : b
     );
-    queue.delete(current);
+    nodosPendientes.delete(actual);
 
-    if (current === end) break;
-    if (!graph[current]) continue;
+    if (actual === fin) break;
+    if (!grafo[actual]) continue;
 
-    for (const neighbor of graph[current]) {
-      const alt = distances[current] + neighbor.weight;
-      if (alt < distances[neighbor.node]) {
-        distances[neighbor.node] = alt;
-        previous[neighbor.node] = current;
+    for (const vecino of grafo[actual]) {
+      const posibleDistancia = distancias[actual] + vecino.peso;
+      if (posibleDistancia < distancias[vecino.nodo]) {
+        distancias[vecino.nodo] = posibleDistancia;
+        anteriores[vecino.nodo] = actual;
       }
     }
   }
 
- const path = [];
-let curr = end;
-while (curr) {
-  path.unshift(curr);
-  curr = previous[curr];
-}
-
-if (path.length < 2 || path[0] !== start) return null;
-
-
-  let cost = 0;
-  for (let i = 0; i < path.length - 1; i++) {
-    const from = path[i];
-    const to = path[i + 1];
-    const edge = graph[from].find(e => String(e.node) === String(to));
-    if (edge) cost += edge.weight;
+   //reconstruir el camino
+  const camino = [];
+  let actual = fin;
+  while (actual) {
+    camino.unshift(actual);
+    actual = anteriores[actual];
   }
 
-  return { path, cost };
+  if (camino.length < 2 || camino[0] !== inicio) return null;
+
+  //longitud total del camino
+  let longitudTotal = 0;
+  for (let i = 0; i < camino.length - 1; i++) {
+    const desde = camino[i];
+    const hasta = camino[i + 1];
+    const arista = grafo[desde].find(e => String(e.nodo) === String(hasta));
+    if (arista)  longitudTotal += arista.peso;
+  }
+
+  return { camino,  longitudTotal };
 }
 
-// Algoritmo A* 
-function astar(graph, start, end) {
-  const openSet = new Set([start]);
-  const cameFrom = {};
-  const gScore = {};
-  const fScore = {};
+// Algoritmo A*
+function astar(grafo, inicio, fin) {
+  const abiertos = new Set([inicio]);
+  const desde = {};
+  const costoG = {};
+  const costoF = {};
 
-  for (const node in graph) {
-    gScore[node] = Infinity;
-    fScore[node] = Infinity;
+//inicializar nodos 
+  for (const nodo in grafo) {
+    costoG[nodo] = Infinity;
+    costoF[nodo] = Infinity;
   }
-  gScore[start] = 0;
-  fScore[start] = 0;  // Sin heurística, como Dijkstra
+  costoG[inicio] = 0;
+  costoF[inicio] = 0;  
 
-  while (openSet.size) {
-    const current = [...openSet].reduce((a, b) =>
-      fScore[a] < fScore[b] ? a : b
+  while (abiertos.size) {
+    //nodo con menor distancia
+    const actual = [...abiertos].reduce((a, b) =>
+      costoF[a] < costoF[b] ? a : b
     );
 
-    if (current === end) {
-      // Reconstruir camino
-      const path = [];
-      let curr = end;
-      while (curr !== undefined) {
-        path.unshift(curr);
-        curr = cameFrom[curr];
+    if (actual === fin) {
+      const camino = [];
+      let nodoActual = fin;
+      while (nodoActual !== undefined) {
+        camino.unshift(nodoActual);
+        nodoActual = desde[nodoActual];
       }
 
-      if (path[0] !== start) return null;
+      if (camino[0] !== inicio) return null;
 
-      let cost = 0;
-      for (let i = 0; i < path.length - 1; i++) {
-        const from = path[i], to = path[i + 1];
-        const edge = graph[from].find(e => String(e.node) === String(to));
-        if (edge) cost += edge.weight;
+       // longitud del camino
+      let longitudTotal = 0;
+      for (let i = 0; i < camino.length - 1; i++) {
+        const desdeNodo = camino[i], hastaNodo = camino[i + 1];
+        const arista = grafo[desdeNodo].find(e => String(e.nodo) === String(hastaNodo));
+        if (arista) longitudTotal += arista.peso;
       }
 
-      return { path, cost };
+      return { camino, longitudTotal };
     }
 
-    openSet.delete(current);
+    abiertos.delete(actual);
 
-    for (const neighbor of graph[String(current)] || []) {
-  const tentativeGScore = gScore[current] + neighbor.weight;
-  if (tentativeGScore < gScore[neighbor.node]) {
-    cameFrom[neighbor.node] = current;
-    gScore[neighbor.node] = tentativeGScore;
-    fScore[neighbor.node] = tentativeGScore;
-    openSet.add(neighbor.node);
+    for (const vecino of grafo[actual] || []) {
+      const posibleCostoG = costoG[actual] + vecino.peso;
+      if (posibleCostoG < costoG[vecino.nodo]) {
+        desde[vecino.nodo] = actual;
+        costoG[vecino.nodo] = posibleCostoG;
+        costoF[vecino.nodo] = posibleCostoG;
+        abiertos.add(vecino.nodo);
+      }
+    }
   }
+
+  return null;  // No hay camino
 }
 
-  }
+// Algoritmo Bellman-Ford
+function bellmanFord(grafo, inicio) {
+  const distancias = {};
+  const anteriores = {};
 
-  return null;  // No se encontró camino
-}
-
-
-
-
-// Algoritmo Bellman-Ford 
-function bellmanFord(graph, start) {
-  const distances = {};
-  const predecessors = {};
-
-  Object.keys(graph).forEach(node => {
-    distances[node] = Infinity;
+  //inicializar distancias a infinito
+  Object.keys(grafo).forEach(nodo => {
+    distancias[nodo] = Infinity;
   });
-  distances[start] = 0;
+  distancias[inicio] = 0;
 
-  const edges = [];
-  for (const u in graph) {
-    for (const { node: v, weight } of graph[u]) {
-      edges.push({ u, v, weight });
+   //lista de aristas
+  const aristas = [];
+  for (const desde in grafo) {
+    for (const { nodo: hasta, peso } of grafo[desde]) {
+      aristas.push({ desde, hasta, peso });
     }
   }
 
-  const numVertices = Object.keys(graph).length;
-
-  for (let i = 0; i < numVertices - 1; i++) {
-    for (const { u, v, weight } of edges) {
-      if (distances[u] + weight < distances[v]) {
-        distances[v] = distances[u] + weight;
-        predecessors[v] = u;
+  const numNodos = Object.keys(grafo).length;
+//hasta aristas (n - 1) veces
+  for (let i = 0; i < numNodos - 1; i++) {
+    for (const { desde, hasta, peso } of aristas) {
+      if (distancias[desde] + peso < distancias[hasta]) {
+        distancias[hasta] = distancias[desde] + peso;
+        anteriores[hasta] = desde;
       }
     }
   }
 
-  for (const { u, v, weight } of edges) {
-    if (distances[u] + weight < distances[v]) {
+  for (const { desde, hasta, peso } of aristas) {
+    if (distancias[desde] + peso < distancias[hasta]) {
       return null; // ciclo negativo
     }
   }
 
-  const paths = {};
-  for (const node in distances) {
-    if (node === start || distances[node] === Infinity) continue;
+  //reconstruir caminos minimos
+  const caminos = {};
+  for (const nodo in distancias) {
+    if (nodo === inicio || distancias[nodo] === Infinity) continue;
 
-    const path = [];
-    let current = node;
-    while (current !== undefined) {
-      path.unshift(current);
-      current = predecessors[current];
+    const camino = [];
+    let actual = nodo;
+    while (actual !== undefined) {
+      camino.unshift(actual);
+      actual = anteriores[actual];
     }
 
-    if (path[0] === start) {
-      paths[node] = { path, cost: distances[node] };
+    if (camino[0] === inicio) {
+      caminos[nodo] = { camino, longitudTotal: distancias[nodo] };
     }
   }
 
-  return paths;
+  return caminos;
 }
 
-// mensaje del hilo principal (Web Worker)
+///mensaje desde el hilo principal
 onmessage = function (e) {
-  const { algoritmo, edgesList, origen, destino } = e.data;
+  const { algoritmo, listaAristas, origen, destino } = e.data;
 
   const grafo = {};
-  for (const { from, to, weight } of edgesList) {
-    const f = String(from);
-    const t = String(to);
+   //reconstruir el grafo a partir de la lista de aristas
+  for (const { from, to, weight } of listaAristas) {
+    const desde = String(from);
+    const hasta = String(to);
 
-    if (!grafo[f]) grafo[f] = [];
-    grafo[f].push({ node: String(t), weight });
+    if (!grafo[desde]) grafo[desde] = [];
+    grafo[desde].push({ nodo: String(hasta), peso: weight });
 
-    if (!grafo[t]) grafo[t] = [];
-    grafo[t].push({ node: String(f), weight });
+    if (!grafo[hasta]) grafo[hasta] = [];
+    grafo[hasta].push({ nodo: String(desde), peso: weight });
   }
 
   console.log("Grafo reconstruido en worker:", grafo);
@@ -186,8 +190,6 @@ onmessage = function (e) {
   } else {
     resultado = dijkstra(grafo, String(origen), String(destino));
   }
-
-  postMessage(resultado || { path: null });
+//resultado al hilo principal
+  postMessage(resultado || { camino: null });
 };
-
-

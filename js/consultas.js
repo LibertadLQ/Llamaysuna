@@ -1,12 +1,17 @@
 import { auth, db } from "./config.js";
 import { onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 
 
 onAuthStateChanged(auth, async (user) => {
+    
     if (user) {
-        const q = query(collection(db, "consultas"), where("uid", "==", user.uid));
+        const q = query(
+            collection(db, "consultas"),
+            where("uid", "==", user.uid),
+            orderBy("fecha", "desc")
+        );
         const querySnapshot = await getDocs(q);
 
         const contenedor = document.getElementById("totalConsultas");
@@ -23,14 +28,11 @@ onAuthStateChanged(auth, async (user) => {
     let resultadoFormateado = "";
 
     if (data.algoritmo === "Bellman_Ford") {
-        // Limpieza y separación del bloque de texto
         let resultado = data.resultado;
 
-        // Eliminar encabezado si lo hay
         resultado = resultado.replace("📍 Caminos mínimos desde el nodo origen:", "").trim();
 
-        // Separar por "Longitud:"
-        const partes = resultado.split("Longitud:");
+        const partes = resultado.split("Longitud total:");
 
         resultadoFormateado = "<h4>📍 Caminos mínimos:</h4><ul>";
 
@@ -46,11 +48,11 @@ onAuthStateChanged(auth, async (user) => {
     } else {
         // Dijkstra o A*
         const partes = data.resultado.split("Longitud total:");
-        const cultivos = partes[0].replace("🔗 Cultivos a recoger:", "").trim();
+        const cultivos = partes[0].replace("Cultivos a recoger:", "").trim();
         const longitud = partes[1] ? partes[1].trim() : "N/A";
 
         resultadoFormateado = `
-            <p><strong>🔗 Cultivos a recoger:</strong> ${cultivos}</p>
+            <p><strong>Cultivos a recoger:</strong> ${cultivos}</p>
             <p><strong>Longitud total:</strong> ${longitud}</p>
         `;
     }
@@ -64,12 +66,9 @@ onAuthStateChanged(auth, async (user) => {
         <p><strong>Fecha:</strong> ${new Date(data.fecha.toDate()).toLocaleString()}</p>
       </div>
     `;
-});
+    });
 
-
-
-
-}
+    }
     }
 });
 
