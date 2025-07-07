@@ -50,22 +50,21 @@ function dijkstra(grafo, inicio, fin) {
 }
 
 // Algoritmo A*
-function astar(grafo, inicio, fin) {
+// Algoritmo A* con heurística real
+function astar(grafo, inicio, fin, posiciones) {
   const abiertos = new Set([inicio]);
   const desde = {};
   const costoG = {};
   const costoF = {};
 
-//inicializar nodos 
   for (const nodo in grafo) {
     costoG[nodo] = Infinity;
     costoF[nodo] = Infinity;
   }
   costoG[inicio] = 0;
-  costoF[inicio] = 0;  
+  costoF[inicio] = heuristica(posiciones[inicio], posiciones[fin]);
 
   while (abiertos.size) {
-    //nodo con menor distancia
     const actual = [...abiertos].reduce((a, b) =>
       costoF[a] < costoF[b] ? a : b
     );
@@ -77,17 +76,14 @@ function astar(grafo, inicio, fin) {
         camino.unshift(nodoActual);
         nodoActual = desde[nodoActual];
       }
-
       if (camino[0] !== inicio) return null;
 
-       // longitud del camino
       let longitudTotal = 0;
       for (let i = 0; i < camino.length - 1; i++) {
         const desdeNodo = camino[i], hastaNodo = camino[i + 1];
         const arista = grafo[desdeNodo].find(e => String(e.nodo) === String(hastaNodo));
         if (arista) longitudTotal += arista.peso;
       }
-
       return { camino, longitudTotal };
     }
 
@@ -98,14 +94,20 @@ function astar(grafo, inicio, fin) {
       if (posibleCostoG < costoG[vecino.nodo]) {
         desde[vecino.nodo] = actual;
         costoG[vecino.nodo] = posibleCostoG;
-        costoF[vecino.nodo] = posibleCostoG;
+        costoF[vecino.nodo] = posibleCostoG + heuristica(posiciones[vecino.nodo], posiciones[fin]);
         abiertos.add(vecino.nodo);
       }
     }
   }
-
-  return null;  // No hay camino
+  return null;
 }
+
+function heuristica(pos1, pos2) {
+  const dx = pos1.x - pos2.x;
+  const dy = pos1.y - pos2.y;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
 
 // Algoritmo Bellman-Ford
 function bellmanFord(grafo, inicio) {
@@ -165,10 +167,9 @@ function bellmanFord(grafo, inicio) {
 
 ///mensaje desde el hilo principal
 onmessage = function (e) {
-  const { algoritmo, listaAristas, origen, destino } = e.data;
+  const { algoritmo, listaAristas, origen, destino, posiciones } = e.data;
 
   const grafo = {};
-   //reconstruir el grafo a partir de la lista de aristas
   for (const { from, to, weight } of listaAristas) {
     const desde = String(from);
     const hasta = String(to);
@@ -180,16 +181,14 @@ onmessage = function (e) {
     grafo[hasta].push({ nodo: String(desde), peso: weight });
   }
 
-  console.log("Grafo reconstruido en worker:", grafo);
-
   let resultado;
   if (algoritmo === "a") {
-    resultado = astar(grafo, String(origen), String(destino));
+    resultado = astar(grafo, String(origen), String(destino), posiciones);
   } else if (algoritmo === "Bellman_Ford") {
     resultado = bellmanFord(grafo, String(origen));
   } else {
     resultado = dijkstra(grafo, String(origen), String(destino));
   }
-//resultado al hilo principal
+
   postMessage(resultado || { camino: null });
 };

@@ -3,6 +3,7 @@ import { collection, addDoc, Timestamp } from "https://www.gstatic.com/firebasej
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
 let conjuntoAristasVis, red, grafo = {};
+let posiciones = {}; 
 
 // Mostrar u ocultar botón de guardar según estado de autenticación
 onAuthStateChanged(auth, (usuario) => {
@@ -61,6 +62,11 @@ window.addEventListener("DOMContentLoaded", () => {
           size: 10
         }))
       );
+
+      // Llenar el objeto posiciones
+      data.nodes.forEach(n => {
+        posiciones[n.id] = { x: n.attributes.x * 5, y: -n.attributes.y * 5 };
+      });
 
       conjuntoAristasVis = new vis.DataSet(
         data.edges.map((e, i) => ({
@@ -132,7 +138,7 @@ window.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    worker.postMessage({ algoritmo, listaAristas, origen, destino });
+    worker.postMessage({ algoritmo, listaAristas, origen, destino, posiciones });
 
     worker.onmessage = (e) => {
       const resultado = e.data;
