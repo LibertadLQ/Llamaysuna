@@ -2,8 +2,6 @@ import { auth, db } from "./config.js";
 import { onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import { collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-
-
 onAuthStateChanged(auth, async (user) => {
     
     if (user) {
